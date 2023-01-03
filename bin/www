@@ -38,7 +38,10 @@ mongoose.connection.on("connected", function () {
 mongoose.connection.on("disconnected", function () {
   console.log("=====Connection Disconnect=====");
 });
-
+console.log("TEST");
+// server.listen(port);
+// server.on("error", onError);
+// server.on("listening", onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -90,6 +93,7 @@ function onError(error) {
  */
 
 function onListening() {
+  console.log("terr");
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
