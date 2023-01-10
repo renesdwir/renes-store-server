@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-console.log("<<>>><><><");
+var methodOverride = require("method-override");
 var dashBoardRouter = require("./app/dashboard/router");
 var categoryRouter = require("./app/category/router");
 console.log(categoryRouter, "<<<<");
@@ -14,6 +14,7 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
