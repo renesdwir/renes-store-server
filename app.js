@@ -6,6 +6,8 @@ var logger = require("morgan");
 var methodOverride = require("method-override");
 var dashBoardRouter = require("./app/dashboard/router");
 var categoryRouter = require("./app/category/router");
+const session = require("express-session");
+const flash = require("connect-flash");
 console.log(categoryRouter, "<<<<");
 
 var app = express();
@@ -14,6 +16,15 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+  })
+);
+app.use(flash());
 app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
