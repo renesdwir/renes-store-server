@@ -11,7 +11,7 @@ const nominalRouter = require("./app/nominal/router");
 
 const session = require("express-session");
 const flash = require("connect-flash");
-console.log(categoryRouter, "<<<<");
+//console.log(categoryRouter, "<<<<");
 
 var app = express();
 
