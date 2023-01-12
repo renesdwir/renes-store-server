@@ -16,16 +16,16 @@ module.exports = {
       console.log(err);
     }
   },
-  //   viewCreate: async (req, res) => {
-  //     try {
-  //       res.render("admin/category/create");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //       console.log(error);
-  //     }
-  //   },
+  viewCreate: async (req, res) => {
+    try {
+      res.render("admin/nominal/create");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+      console.log(error);
+    }
+  },
   //   actionCreate: async (req, res) => {
   //     try {
   //       const { name } = req.body;
