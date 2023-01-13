@@ -26,22 +26,22 @@ module.exports = {
       console.log(error);
     }
   },
-  //   actionCreate: async (req, res) => {
-  //     try {
-  //       const { name } = req.body;
-  //       let category = await Category({ name });
-  //       await category.save();
+  actionCreate: async (req, res) => {
+    try {
+      const { coinName, coinQty, coinPrice } = req.body;
+      let nominal = await Nominal({ coinName, coinQty, coinPrice });
+      await nominal.save();
 
-  //       req.flash("alertMessage", "Data Created Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //       console.log(error);
-  //     }
-  //   },
+      req.flash("alertMessage", "Data Created Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+      console.log(error);
+    }
+  },
   //   viewEdit: async (req, res) => {
   //     try {
   //       const { id } = req.params;
