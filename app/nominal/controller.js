@@ -29,7 +29,11 @@ module.exports = {
   actionCreate: async (req, res) => {
     try {
       const { coinName, coinQty, coinPrice } = req.body;
-      let nominal = await Nominal({ coinName, coinQty, coinPrice });
+      let nominal = await Nominal({
+        coinName,
+        coinQuantity: coinQty,
+        price: coinPrice,
+      });
       await nominal.save();
 
       req.flash("alertMessage", "Data Created Successfully");
@@ -42,45 +46,49 @@ module.exports = {
       console.log(error);
     }
   },
-  //   viewEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const category = await Category.findOne({ _id: id });
-  //       res.render("admin/category/edit", { category });
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //       console.log(error);
-  //     }
-  //   },
-  //   actionEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const { name } = req.body;
-  //       await Category.findOneAndUpdate({ _id: id }, { name });
-  //       req.flash("alertMessage", "Data Edited Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //       console.log(error);
-  //     }
-  //   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       await Category.findOneAndRemove({ _id: id });
-  //       req.flash("alertMessage", "Data Deleted Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //       console.log(error);
-  //     }
-  //   },
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const nominal = await Nominal.findOne({ _id: id });
+      console.log(nominal);
+      res.render("admin/nominal/edit", { nominal });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+      console.log(error);
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { coinName, coinQty, coinPrice } = req.body;
+      await Nominal.findOneAndUpdate(
+        { _id: id },
+        { coinName, coinQuantity: coinQty, price: coinPrice }
+      );
+      req.flash("alertMessage", "Data Edited Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+      console.log(error);
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Nominal.findOneAndRemove({ _id: id });
+      req.flash("alertMessage", "Data Deleted Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+      console.log(error);
+    }
+  },
 };
