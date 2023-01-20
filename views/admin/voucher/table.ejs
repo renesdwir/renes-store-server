@@ -45,10 +45,21 @@
                             <% } %>
                 </td>
                 <td>
-                    <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
-                        <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-warning mr-1"><i
-                                class="fas fa-pencil-alt mr-2"></i>Ubah</a>
-                        <button class="btn btn-danger"><i class="fas fa-trash mr-2"></i>Hapus</button>
+                    <form style="display: inline-block;">
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-folder mr-2"></i>
+                            <% if(voucher[i].status==="Y" ){ %>
+                                Non Active
+                                <% }else{ %>
+                                    Active
+                                    <% } %>
+                        </button>
+
+                    </form>
+                    <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-sm btn-info mr-1"><i
+                            class="fas fa-pencil-alt mr-2"></i>Ubah</a>
+                    <form style="display: inline-block;" action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE"
+                        method="POST">
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash mr-2"></i>Hapus</button>
                     </form>
                 </td>
             </tr>
