@@ -4,8 +4,8 @@ const {
   index,
   viewCreate,
   actionCreate,
-  //   viewEdit,
-  //   actionEdit,
+  viewEdit,
+  actionEdit,
   //   actionDelete,
 } = require("./controller");
 const multer = require("multer");
@@ -19,8 +19,12 @@ router.post(
   multer({ dest: os.tmpdir() }).single("image"),
   actionCreate
 );
-// router.get("/edit/:id", viewEdit);
-// router.put("/edit/:id", actionEdit);
+router.get("/edit/:id", viewEdit);
+router.put(
+  "/edit/:id",
+  multer({ dest: os.tmpdir() }).single("image"),
+  actionEdit
+);
 // router.delete("/delete/:id", actionDelete);
 
 module.exports = router;
