@@ -165,18 +165,22 @@ module.exports = {
       console.log(error);
     }
   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       await Nominal.findOneAndRemove({ _id: id });
-  //       req.flash("alertMessage", "Data Deleted Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/nominal");
-  //       console.log(error);
-  //     }
-  //   },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let voucher = await Voucher.findOneAndRemove({ _id: id });
+      let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+      if (fs.existsSync(currentImage)) {
+        fs.unlinkSync(currentImage);
+      }
+      req.flash("alertMessage", "Data Deleted Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/voucher");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+      console.log(error);
+    }
+  },
 };
