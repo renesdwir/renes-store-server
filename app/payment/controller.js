@@ -19,7 +19,8 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
-      res.render("admin/payment/create");
+      const banks = await Bank.find();
+      res.render("admin/payment/create", { banks });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -27,26 +28,25 @@ module.exports = {
       console.log(error);
     }
   },
-  //   actionCreate: async (req, res) => {
-  //     try {
-  //       const { coinName, coinQty, coinPrice } = req.body;
-  //       let nominal = await Nominal({
-  //         coinName,
-  //         coinQuantity: coinQty,
-  //         price: coinPrice,
-  //       });
-  //       await nominal.save();
+  actionCreate: async (req, res) => {
+    try {
+      const { type, banks } = req.body;
+      let payment = await Payment({
+        type,
+        banks,
+      });
+      await payment.save();
 
-  //       req.flash("alertMessage", "Data Created Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/nominal");
-  //       console.log(error);
-  //     }
-  //   },
+      req.flash("alertMessage", "Data Created Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+      console.log(error);
+    }
+  },
   //   viewEdit: async (req, res) => {
   //     try {
   //       const { id } = req.params;
