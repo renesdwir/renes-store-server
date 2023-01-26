@@ -8,7 +8,7 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
 
       const alert = { message: alertMessage, status: alertStatus };
-      const payment = await Payment.find();
+      const payment = await Payment.find().populate("banks");
       res.render("./admin/payment/view_payment", { payment, alert });
     } catch (err) {
       req.flash("alertMessage", `${err.message}`);
