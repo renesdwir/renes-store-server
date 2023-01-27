@@ -47,19 +47,19 @@ module.exports = {
       console.log(error);
     }
   },
-  //   viewEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const nominal = await Nominal.findOne({ _id: id });
-  //       console.log(nominal);
-  //       res.render("admin/nominal/edit", { nominal });
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/nominal");
-  //       console.log(error);
-  //     }
-  //   },
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const payment = await Payment.findOne({ _id: id }).populate("banks");
+      const banks = await Bank.find();
+      res.render("admin/payment/edit", { payment, banks });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+      console.log(error);
+    }
+  },
   //   actionEdit: async (req, res) => {
   //     try {
   //       const { id } = req.params;
