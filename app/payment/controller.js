@@ -75,18 +75,18 @@ module.exports = {
       console.log(error);
     }
   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       await Nominal.findOneAndRemove({ _id: id });
-  //       req.flash("alertMessage", "Data Deleted Successfully");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/nominal");
-  //       console.log(error);
-  //     }
-  //   },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Payment.findOneAndRemove({ _id: id });
+      req.flash("alertMessage", "Data Deleted Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+      console.log(error);
+    }
+  },
 };
