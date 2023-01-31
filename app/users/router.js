@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const {
   viewSignin,
-  //   viewCreate,
+  actionSignIn,
   //   actionCreate,
   //   viewEdit,
   //   actionEdit,
@@ -11,7 +11,7 @@ const {
 
 /* GET home page. */
 router.get("/", viewSignin);
-// router.get("/create", viewCreate);
+router.post("/", actionSignIn);
 // router.post("/create", actionCreate);
 // router.get("/edit/:id", viewEdit);
 // router.put("/edit/:id", actionEdit);
