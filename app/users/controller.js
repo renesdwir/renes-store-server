@@ -30,13 +30,14 @@ module.exports = {
         req.flash("alertStatus", "danger");
         res.redirect("/");
       }
-      const checkPassword = bcrypt.compare(password, user.password);
+      const checkPassword = await bcrypt.compare(password, user.password);
       if (!checkPassword) {
         req.flash("alertMessage", `Incorrect Email or Password`);
         req.flash("alertStatus", "danger");
         res.redirect("/");
+      } else {
+        res.redirect("/dashboard");
       }
-      res.redirect("/dashboard");
     } catch (err) {
       req.flash("alertMessage", `${err.message}`);
       req.flash("alertStatus", "danger");
