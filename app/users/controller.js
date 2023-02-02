@@ -31,25 +31,26 @@ module.exports = {
           req.flash("alertMessage", `Incorrect Email or Password`);
           req.flash("alertStatus", "danger");
           res.redirect("/");
-        }
-        if (user.status === "N") {
-          req.flash("alertMessage", `User Inactive`);
-          req.flash("alertStatus", "danger");
-          res.redirect("/");
-        }
-        const checkPassword = await bcrypt.compare(password, user.password);
-        if (!checkPassword) {
-          req.flash("alertMessage", `Incorrect Email or Password`);
-          req.flash("alertStatus", "danger");
-          res.redirect("/");
         } else {
-          req.session.user = {
-            id: user._id,
-            email: user.email,
-            status: user.status,
-            name: user.name,
-          };
-          res.redirect("/dashboard");
+          if (user.status === "N") {
+            req.flash("alertMessage", `User Inactive`);
+            req.flash("alertStatus", "danger");
+            res.redirect("/");
+          }
+          const checkPassword = await bcrypt.compare(password, user.password);
+          if (!checkPassword) {
+            req.flash("alertMessage", `Incorrect Email or Password`);
+            req.flash("alertStatus", "danger");
+            res.redirect("/");
+          } else {
+            req.session.user = {
+              id: user._id,
+              email: user.email,
+              status: user.status,
+              name: user.name,
+            };
+            res.redirect("/dashboard");
+          }
         }
       }
     } catch (err) {
