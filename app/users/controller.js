@@ -60,4 +60,8 @@ module.exports = {
       console.log(err);
     }
   },
+  actionLogout: (req, res) => {
+    req.session.destroy();
+    res.redirect("/");
+  },
 };
