@@ -12,6 +12,9 @@ const voucherRouter = require("./app/voucher/router");
 const bankRouter = require("./app/bank/router");
 const paymentRouter = require("./app/payment/router");
 const usersRouter = require("./app/users/router");
+const transactionRouter = require("./app/transaction/router");
+const { isLoginAdmin } = require("./app/middleware/auth");
+/* GET home page. */
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -44,12 +47,14 @@ app.use(
 );
 
 app.use("/", usersRouter);
+app.use(isLoginAdmin);
 app.use("/dashboard", dashBoardRouter);
 app.use("/category", categoryRouter);
 app.use("/nominal", nominalRouter);
 app.use("/voucher", voucherRouter);
 app.use("/bank", bankRouter);
 app.use("/payment", paymentRouter);
+app.use("/transaction", transactionRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
