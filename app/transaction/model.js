@@ -64,6 +64,7 @@ let transactionSchema = new mongoose.Schema(
     historyUser: {
       name: { type: String, require: [true, "Player Name is required"] },
       phoneNumber: {
+        type: Number,
         require: [true, "Account user is required"],
         maxlength: [
           13,
