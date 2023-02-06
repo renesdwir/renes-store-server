@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 let bankSchema = new mongoose.Schema(
   {
-    userAccount: {
+    name: {
       type: String,
-      require: [true, "userAccount is required"],
+      require: [true, "Name is required"],
     },
     bankName: {
       type: String,
