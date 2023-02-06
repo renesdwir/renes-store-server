@@ -18,7 +18,6 @@ let transactionSchema = new mongoose.Schema(
       type: { type: String, require: [true, "Payment type is required"] },
       bankName: { type: String, require: [true, "Bank Name is required"] },
       noRekening: { type: String, require: [true, "Rekening No is required"] },
-      noRekening: { type: String, require: [true, "Rekening No is required"] },
     },
     name: {
       type: String,
@@ -78,7 +77,7 @@ let transactionSchema = new mongoose.Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Player",
+      ref: "Category",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
