@@ -57,8 +57,12 @@
                 </td>
                 <td>
                     <form style="display: inline-block;"
-                        action="/transaction/delete/<%= transaction[i]._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash mr-2"></i>Hapus</button>
+                        action="/transaction/status/<%= transaction[i]._id %>?_method=PUT" method="POST">
+                        <button class="btn btn-info btn-sm"><i class="fas fa-check mr-2"></i>Accept</button>
+                    </form>
+                    <form style="display: inline-block;"
+                        action="/transaction/status/<%= transaction[i]._id %>?_method=PUT" method="POST">
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-times-circle mr-2"></i>Reject</button>
                     </form>
                 </td>
             </tr>
