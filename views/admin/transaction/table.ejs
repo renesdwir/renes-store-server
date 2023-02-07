@@ -1,0 +1,67 @@
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Game Name</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Player Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i=0; i < transaction.length; i++){%>
+
+            <tr>
+                <td>
+                    <%=i+1%>
+                </td>
+                <td>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <img src="http://localhost:3000/uploads/<%=transaction[i].historyVoucherTopup?.thumbnail%>"
+                                alt="thumbnail" width="48px" height="48px" />
+                        </li>
+                    </ul>
+                    <%=transaction[i]?.historyVoucherTopup?.gameName%>
+                        <br>
+                        <%=transaction[i].historyVoucherTopup?.category%>
+
+                </td>
+                <td>
+                    <%=transaction[i].historyVoucherTopup?.coinQuantity%>
+                        <%=transaction[i].historyVoucherTopup?.coinName%>
+                </td>
+                <td>
+                    <%=transaction[i].historyVoucherTopup?.price%>
+                </td>
+
+                <td class="text-center">
+                    <% if(transaction[i].status==="pending" ){ %>
+                        <span class="badge badge-warning">
+                            <%=transaction[i].status%>
+                        </span>
+                        <% }else if(transaction[i].status==="success" ){ %>
+                            <span class="badge badge-success">
+                                <%=transaction[i].status%>
+                            </span>
+                            <% } else{%>
+                                <span class="badge badge-danger">
+                                    <%=transaction[i].status%>
+                                </span>
+                                <% }%>
+                </td>
+                <td>
+                    <%=transaction[i].player?.name ?? '-' %>
+                </td>
+                <td>
+                    <form style="display: inline-block;"
+                        action="/transaction/delete/<%= transaction[i]._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash mr-2"></i>Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            <%}%>
+    </tbody>
+</table>
