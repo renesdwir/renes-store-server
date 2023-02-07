@@ -8,12 +8,11 @@ module.exports = {
 
       const alert = { message: alertMessage, status: alertStatus };
       const transaction = await Transaction.find();
-      console.log(transaction);
       res.render("./admin/transaction/view_transaction", {
         transaction,
         alert,
         name: req.session.user.name,
-        title: "transaction Page",
+        title: "Transaction Page",
       });
     } catch (err) {
       req.flash("alertMessage", `${err.message}`);

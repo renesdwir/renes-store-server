@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 let transactionSchema = new mongoose.Schema(
   {
-    historyVoucherTopUp: {
+    historyVoucherTopup: {
       gameName: { type: String, require: [true, "Game name is required"] },
       category: { type: String, require: [true, "Category is required"] },
       thumbnail: { type: String },
