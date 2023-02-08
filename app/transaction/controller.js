@@ -18,7 +18,22 @@ module.exports = {
       req.flash("alertMessage", `${err.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/transaction");
-      console.log(err);
+    }
+  },
+  actionStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.query;
+
+      await Transaction.findByIdAndUpdate({ _id: id }, { status });
+
+      req.flash("alertMessage", "Data Updated Successfully");
+      req.flash("alertStatus", "success");
+      res.redirect("/transaction");
+    } catch (error) {
+      req.flash("alertMessage", `${err.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/transaction");
     }
   },
 };
