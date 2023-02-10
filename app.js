@@ -14,6 +14,7 @@ const paymentRouter = require("./app/payment/router");
 const usersRouter = require("./app/users/router");
 const transactionRouter = require("./app/transaction/router");
 const { isLoginAdmin } = require("./app/middleware/auth");
+const playerRouter = require("./app/player/router");
 /* GET home page. */
 
 const session = require("express-session");
@@ -21,7 +22,7 @@ const flash = require("connect-flash");
 //console.log(categoryRouter, "<<<<");
 
 var app = express();
-
+const URL = "/api/v1";
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -45,6 +46,9 @@ app.use(
   "/adminlte",
   express.static(path.join(__dirname, "/node_modules/admin-lte/"))
 );
+
+//api
+app.use(`${URL}/players`, playerRouter);
 
 app.use("/", usersRouter);
 app.use(isLoginAdmin);
