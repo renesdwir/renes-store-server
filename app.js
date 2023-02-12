@@ -15,6 +15,7 @@ const usersRouter = require("./app/users/router");
 const transactionRouter = require("./app/transaction/router");
 const { isLoginAdmin } = require("./app/middleware/auth");
 const playerRouter = require("./app/player/router");
+const authRouter = require("./app/auth/router");
 /* GET home page. */
 
 const session = require("express-session");
@@ -49,6 +50,7 @@ app.use(
 
 //api
 app.use(`${URL}/players`, playerRouter);
+app.use(`${URL}/auth`, authRouter);
 
 app.use("/", usersRouter);
 app.use(isLoginAdmin);
