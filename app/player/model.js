@@ -73,18 +73,20 @@ let playerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 playerSchema.path("email").validate(
-  async (value) => {
+  async function (value) {
     try {
       console.log(value);
+      //console.log(await playerSchema());
       const count = await this.model("Player").countDocuments({ email: value });
       return !count;
     } catch (error) {
       throw error;
     }
   },
-  (attr) => `${value} already used`
+  (attr) => `${attr.value} already used`
 );
 playerSchema.pre("save", function (next) {
+  //console.log(this);
   this.password = bcrypt.hashSync(this.password, HASH_ROUND);
   next();
 });
