@@ -2,6 +2,7 @@ const Player = require("../player/model");
 const path = require("path");
 const fs = require("fs");
 const config = require("../../config");
+//14:41
 module.exports = {
   signUp: async (req, res, next) => {
     try {
@@ -23,19 +24,19 @@ module.exports = {
         src.pipe(dest);
         src.on("end", async () => {
           try {
-            const voucher = new Voucher({
-              name,
-              category,
-              nominals,
-              thumbnail: fileName,
-            });
-            await voucher.save();
-
-            req.flash("alertMessage", "Data Created Successfully");
-            req.flash("alertStatus", "success");
-            res.redirect("/voucher");
+            const player = new Player({ ...payload, avatar: fileName });
+            await player.save();
+            delete player._doc.password;
+            res.status(201).json({ data: player });
           } catch (error) {
-            console.log(error);
+            if (error && error.name === "ValidationError") {
+              return res.status(422).json({
+                error: 1,
+                message: error.message,
+                fields: error.errors,
+              });
+            }
+            next(error);
           }
         });
       } else {
