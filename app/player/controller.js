@@ -64,6 +64,24 @@ module.exports = {
         return res.status(404).json({ message: "payment not found" });
       const res_bank = await Bank.findOne({ _id: bank });
       if (!res_bank) return res.status(404).json({ message: "bank not found" });
+      const payload = {
+        historyVoucherTopup: {
+          gameName: res_voucher._doc.name,
+          category: res_voucher._doc.category
+            ? res_voucher._doc.category.name
+            : "",
+          thumbnail: res_voucher._doc.thumbnail,
+          coinName: res_nominal._doc.coinName,
+          coinQuantity: res_nominal._doc.coinQuantity,
+          price: res_nominal._doc.price,
+        },
+        historyPayment: {
+          name: res_payment._doc.name,
+          type: res_payment._doc.type,
+          bankName: res_payment._doc.bankName,
+          noRekening: res_nominal._doc.noRekening,
+        },
+      };
     } catch (error) {
       res
         .status(500)
