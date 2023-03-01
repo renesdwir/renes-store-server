@@ -9,4 +9,13 @@ module.exports = {
       res.redirect("/");
     } else next();
   },
+  isLoginPlayer: (req, res, next) => {
+    try {
+      const token = req.header.authorization;
+    } catch (error) {
+      res.status(401).json({
+        error: "Not authorize to access this resource",
+      });
+    }
+  },
 };
