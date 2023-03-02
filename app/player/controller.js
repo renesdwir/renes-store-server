@@ -87,7 +87,7 @@ module.exports = {
         accountUser: accountUser,
         tax: tax,
         value: value,
-        // player: req.player._id,
+        player: req.player._id,
         historyUser: {
           name: res_voucher._doc.user?._id,
           phoneNumber: res_voucher._doc.user?.phoneNumber,
