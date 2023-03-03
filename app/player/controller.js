@@ -107,4 +107,13 @@ module.exports = {
         .json({ message: error.message || "Internal Server Error" });
     }
   },
+  history: async (req, res) => {
+    try {
+      const { status = "" } = req.query;
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: error.message || "Internal Server Error" });
+    }
+  },
 };
