@@ -4,6 +4,7 @@ const Category = require("../category/model");
 const Nominal = require("../nominal/model");
 const Payment = require("../payment/model");
 const Bank = require("../bank/model");
+const Transaction = require("../transaction/model");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -95,8 +96,10 @@ module.exports = {
         category: res_voucher._doc.category?._id,
         user: res_voucher._doc.user?._id,
       };
+      const transaction = new Transaction(payload);
+      await transaction.save();
       res.status(201).json({
-        data: payload,
+        data: transaction,
       });
     } catch (error) {
       res
