@@ -79,10 +79,10 @@ module.exports = {
           price: res_nominal._doc.price,
         },
         historyPayment: {
-          name: res_payment._doc.name,
+          name: res_bank._doc.name,
           type: res_payment._doc.type,
-          bankName: res_payment._doc.bankName,
-          noRekening: res_nominal._doc.noRekening,
+          bankName: res_bank._doc.bankName,
+          noRekening: res_bank._doc.noRekening,
         },
         name: name,
         accountUser: accountUser,
@@ -90,7 +90,7 @@ module.exports = {
         value: value,
         player: req.player._id,
         historyUser: {
-          name: res_voucher._doc.user?._id,
+          name: res_voucher._doc.user?.name,
           phoneNumber: res_voucher._doc.user?.phoneNumber,
         },
         category: res_voucher._doc.category?._id,
