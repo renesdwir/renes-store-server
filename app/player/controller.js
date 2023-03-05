@@ -157,4 +157,23 @@ module.exports = {
         .json({ message: error.message || "Internal Server Error" });
     }
   },
+  dashboard: async (req, res) => {
+    try {
+      const count = await Transaction.aggregate([
+        {
+          $match: { player: req.player_id },
+        },
+        {
+          $group: {
+            _id: "$cateory",
+            value: { $sum: $value },
+          },
+        },
+      ]);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: error.message || "Internal Server Error" });
+    }
+  },
 };
