@@ -170,7 +170,18 @@ module.exports = {
           },
         },
       ]);
-      res.status(200).json({ data: count });
+      const category = await Category.find({});
+      category.forEach((el) => {
+        count.forEach((elCount) => {
+          if (elCount._id.toString() === el._id.toString()) {
+            elCount.name = el.name;
+          }
+        });
+      });
+      const history = await Transaction.find({ player: req.player._id })
+        .populate("category")
+        .sort({ updatedAt: -1 });
+      res.status(200).json({ data: history, count });
     } catch (error) {
       res
         .status(500)
