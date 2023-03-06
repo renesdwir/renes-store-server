@@ -161,15 +161,16 @@ module.exports = {
     try {
       const count = await Transaction.aggregate([
         {
-          $match: { player: req.player_id },
+          $match: { player: req.player._id },
         },
         {
           $group: {
-            _id: "$cateory",
-            value: { $sum: $value },
+            _id: "$category",
+            value: { $sum: "$value" },
           },
         },
       ]);
+      res.status(200).json({ data: count });
     } catch (error) {
       res
         .status(500)
