@@ -205,4 +205,13 @@ module.exports = {
         .json({ message: error.message || "Internal Server Error" });
     }
   },
+  editProfile: async (req, res) => {
+    try {
+      console.log("editProfile");
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: error.message || "Internal Server Error" });
+    }
+  },
 };
