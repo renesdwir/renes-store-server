@@ -207,7 +207,30 @@ module.exports = {
   },
   editProfile: async (req, res) => {
     try {
-      console.log("editProfile");
+      const { name = "", phoneNumber = "" } = req.body;
+      const payload = {};
+      if (name.length) payload.name = name;
+      if (phoneNumber.length) payload.phoneNumber = phoneNumber;
+      if (req.file) {
+      } else {
+        const player = await Player.findOneAndUpdate(
+          {
+            _id: req.player._id,
+          },
+          payload,
+          { new: true, runValidators: true }
+        );
+        res
+          .status(201)
+          .json({
+            data: {
+              id: player.id,
+              name: player.name,
+              phoneNumber: player.phoneNumber,
+              avatar: player.avatar,
+            },
+          });
+      }
     } catch (error) {
       res
         .status(500)
