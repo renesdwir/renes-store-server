@@ -12,6 +12,8 @@ const {
   editProfile,
 } = require("./controller");
 const { isLoginPlayer } = require("../middleware/auth");
+const multer = require("multer");
+const os = require("os");
 
 /* GET home page. */
 router.get("/landingpage", landingPage);
