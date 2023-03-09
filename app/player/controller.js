@@ -230,7 +230,7 @@ module.exports = {
 
         src.pipe(dest);
         src.on("end", async () => {
-          let player = await Player.findOne({ _id: id });
+          let player = await Player.findOne({ _id: req.player._id });
           let currentImage = `${config.rootPath}/public/uploads/${player.avatar}`;
           if (fs.existsSync(currentImage)) {
             fs.unlinkSync(currentImage);
