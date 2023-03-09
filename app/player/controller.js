@@ -5,6 +5,9 @@ const Nominal = require("../nominal/model");
 const Payment = require("../payment/model");
 const Bank = require("../bank/model");
 const Transaction = require("../transaction/model");
+const path = require("path");
+const fs = require("fs");
+const config = require("../../config");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -212,6 +215,41 @@ module.exports = {
       if (name.length) payload.name = name;
       if (phoneNumber.length) payload.phoneNumber = phoneNumber;
       if (req.file) {
+        let tmp_path = req.file.path;
+        let originExt =
+          req.file.originalname.split(".")[
+            req.file.originalname.split(".").length - 1
+          ];
+        let fileName = req.file.filename + "." + originExt;
+        let target_path = path.resolve(
+          config.rootPath,
+          `public/uploads/${fileName}`
+        );
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+
+        src.pipe(dest);
+        src.on("end", async () => {
+          let player = await Player.findOne({ _id: id });
+          let currentImage = `${config.rootPath}/public/uploads/${player.avatar}`;
+          if (fs.existsSync(currentImage)) {
+            fs.unlinkSync(currentImage);
+          }
+          player = await Player.findOneAndUpdate(
+            {
+              _id: id,
+            },
+            { ...payload, avatar: fileName }
+          );
+          res.status(201).json({
+            data: {
+              id: player.id,
+              name: player.name,
+              phoneNumber: player.phoneNumber,
+              avatar: player.avatar,
+            },
+          });
+        });
       } else {
         const player = await Player.findOneAndUpdate(
           {
@@ -220,16 +258,14 @@ module.exports = {
           payload,
           { new: true, runValidators: true }
         );
-        res
-          .status(201)
-          .json({
-            data: {
-              id: player.id,
-              name: player.name,
-              phoneNumber: player.phoneNumber,
-              avatar: player.avatar,
-            },
-          });
+        res.status(201).json({
+          data: {
+            id: player.id,
+            name: player.name,
+            phoneNumber: player.phoneNumber,
+            avatar: player.avatar,
+          },
+        });
       }
     } catch (error) {
       res
