@@ -208,7 +208,7 @@ module.exports = {
         .json({ message: error.message || "Internal Server Error" });
     }
   },
-  editProfile: async (req, res) => {
+  editProfile: async (req, res, next) => {
     try {
       const { name = "", phoneNumber = "" } = req.body;
       const payload = {};
@@ -237,9 +237,10 @@ module.exports = {
           }
           player = await Player.findOneAndUpdate(
             {
-              _id: id,
+              _id: id.player._id,
             },
-            { ...payload, avatar: fileName }
+            { ...payload, avatar: fileName },
+            { new: true, runValidators: true }
           );
           res.status(201).json({
             data: {
@@ -249,6 +250,9 @@ module.exports = {
               avatar: player.avatar,
             },
           });
+        });
+        src.on("err", async () => {
+          next(err);
         });
       } else {
         const player = await Player.findOneAndUpdate(
@@ -268,6 +272,13 @@ module.exports = {
         });
       }
     } catch (error) {
+      if (error && error.name === "ValidationError") {
+        res.status(422).json({
+          error: 1,
+          message: error.message,
+          fields: error.errors,
+        });
+      }
       res
         .status(500)
         .json({ message: error.message || "Internal Server Error" });
