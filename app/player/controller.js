@@ -32,7 +32,11 @@ module.exports = {
       if (!voucher) {
         return res.status(404).json({ message: "voucher game not found.!" });
       }
-      res.status(200).json({ data: voucher });
+      const payments = await Payment.find();
+      if (!voucher) {
+        return res.status(404).json({ message: "payments game not found.!" });
+      }
+      res.status(200).json({ data: { voucher, payments } });
     } catch (error) {
       res
         .status(500)
