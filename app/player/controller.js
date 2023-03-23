@@ -32,7 +32,7 @@ module.exports = {
       if (!voucher) {
         return res.status(404).json({ message: "voucher game not found.!" });
       }
-      const payments = await Payment.find();
+      const payments = await Payment.find().populate("banks");
       if (!voucher) {
         return res.status(404).json({ message: "payments game not found.!" });
       }
