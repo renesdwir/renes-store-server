@@ -37,7 +37,7 @@ module.exports = {
             req.flash("alertStatus", "danger");
             res.redirect("/");
           }
-          const checkPassword = await bcrypt.compare(password, user.password);
+          const checkPassword = bcrypt.compareSync(password, user.password);
           if (!checkPassword) {
             req.flash("alertMessage", `Incorrect Email or Password`);
             req.flash("alertStatus", "danger");
@@ -63,5 +63,22 @@ module.exports = {
   actionLogout: (req, res) => {
     req.session.destroy();
     res.redirect("/");
+  },
+  signUp: async (req, res, next) => {
+    try {
+      const payload = req.body;
+      let user = new User(payload);
+      await user.save();
+      res.status(201).json({ data: user });
+    } catch (error) {
+      if (error && error.name === "ValidationError") {
+        return res.status(422).json({
+          error: 1,
+          message: error.message,
+          fields: error.errors,
+        });
+      }
+      next(error);
+    }
   },
 };
