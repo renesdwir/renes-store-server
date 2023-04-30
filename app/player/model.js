@@ -56,18 +56,7 @@ let playerSchema = new mongoose.Schema(
     fileName: {
       type: String,
     },
-    phoneNumber: {
-      type: String,
-      require: [true, "Phone Number is required"],
-      maxlength: [
-        13,
-        "username length must be greater than 9 character and  smaller than 13 character",
-      ],
-      minlength: [
-        9,
-        "username length must be greater than 9 character and  smaller than 13 character",
-      ],
-    },
+
     favorite: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
   },
   { timestamps: true }
