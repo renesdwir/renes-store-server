@@ -41,7 +41,7 @@ module.exports = {
           }
         });
       } else {
-        let player = new Player(payload);
+        let player = new Player({ ...payload, avatar: "default.png" });
         await player.save();
         delete player._doc.password;
         res.status(201).json({ data: player });
