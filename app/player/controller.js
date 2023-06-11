@@ -241,7 +241,7 @@ module.exports = {
           }
           player = await Player.findOneAndUpdate(
             {
-              _id: id.player._id,
+              _id: player._id,
             },
             { ...payload, avatar: fileName },
             { new: true, runValidators: true }
